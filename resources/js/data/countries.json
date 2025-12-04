@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Australia",
+    "flag": "/images/flags/au.svg",
+    "code": "AU",
+    "continent": "Oceania"
+  },
+  {
+    "name": "New Zealand",
+    "flag": "/images/flags/nz.svg",
+    "code": "NZ",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Papua New Guinea",
+    "flag": "/images/flags/pg.svg",
+    "code": "PG",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Fiji",
+    "flag": "/images/flags/fj.svg",
+    "code": "FJ",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Solomon Islands",
+    "flag": "/images/flags/sb.svg",
+    "code": "SB",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Vanuatu",
+    "flag": "/images/flags/vu.svg",
+    "code": "VU",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Samoa",
+    "flag": "/images/flags/ws.svg",
+    "code": "WS",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Tonga",
+    "flag": "/images/flags/to.svg",
+    "code": "TO",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Kiribati",
+    "flag": "/images/flags/ki.svg",
+    "code": "KI",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Federated States of Micronesia",
+    "flag": "/images/flags/fm.svg",
+    "code": "FM",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Marshall Islands",
+    "flag": "/images/flags/mh.svg",
+    "code": "MH",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Palau",
+    "flag": "/images/flags/pw.svg",
+    "code": "PW",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Nauru",
+    "flag": "/images/flags/nr.svg",
+    "code": "NR",
+    "continent": "Oceania"
+  },
+  {
+    "name": "Tuvalu",
+    "flag": "/images/flags/tv.svg",
+    "code": "TV",
+    "continent": "Oceania"
+  }
+]
