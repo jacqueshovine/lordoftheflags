@@ -18,7 +18,7 @@ createServer(
     { cluster: true },
 );
 
-function resolvePage(name: string) {
+function resolvePage(name) {
     const pages = import.meta.glob<DefineComponent>('./pages/**/*.vue');
 
     return resolvePageComponent<DefineComponent>(`./pages/${name}.vue`, pages);
