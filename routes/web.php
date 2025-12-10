@@ -10,3 +10,9 @@ Route::get('/', function () {
         'countries' => $countries
     ]);
 })->name('home');
+
+
+// TEST ROUTE FOR SANDBOXING NEW FEATURES, DELETE LATER
+Route::get('/sandbox', function () {
+    return Inertia::render('Sandbox');
+})->name('sandbox');
