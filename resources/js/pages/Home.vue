@@ -1,13 +1,18 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { shuffle } from '../utils';
 import FlagGrid from '../components/FlagGrid.vue';
+import ScoreDisplay from '../components/ScoreDisplay.vue';
+import GameQuestion from '../components/GameQuestion.vue';
 
 const props = defineProps({
   countries: Array
 });
 
-const countries = ref(props.countries || []);
+// const countries = ref(props.countries || []);
+const countries = computed(() => {
+    return props.countries || [];
+});
 
 const gameRunning = ref(false);
 const roundsLeft = ref(0);
@@ -18,12 +23,6 @@ const maxScore = ref(0);
 const countryToGuess = ref('');
 const countryPossibilities = ref([]);
 const selectedAnswer = ref(null);
-
-const flagBorders = {
-    correct: 'border-green-500',
-    incorrect: 'border-red-500',
-    neutral: 'border-transparent',
-}
 
 function initGame() {
     // Shuffle the countries array to randomize the order every time
@@ -68,29 +67,6 @@ function checkAnswer(selectedCountry) {
     }, 1500);
 }
 
-function getFlagBorderClass(countryCode) {
-    if (!selectedAnswer.value) {
-        return flagBorders.neutral;
-    }
-    
-    const isSelected = selectedAnswer.value === countryCode;
-    const isCorrect = countryCode === countryToGuess.value.code;
-    
-    if (isSelected && isCorrect) {
-        return flagBorders.correct;
-    }
-    
-    if (isSelected && !isCorrect) {
-        return flagBorders.incorrect;
-    }
-    
-    if (!isSelected && isCorrect) {
-        return flagBorders.correct;
-    }
-    
-    return flagBorders.neutral;
-}
-
 function endGame() {
     gameRunning.value = false;
     if (currentScore.value > maxScore.value) {
@@ -108,24 +84,21 @@ function endGame() {
 
         <button v-show="!gameRunning" @click="initGame()">Start Game</button>
 
-        <div v-show="gameRunning">
-            <p>Current Score: {{ currentScore }}</p>
-            <p>Max Score: {{ maxScore }}</p>
-        </div>
-
+        <ScoreDisplay 
+            v-show="gameRunning"
+            :current-score="currentScore"
+            :max-score="maxScore"
+        />
 
         <div v-if="gameRunning">
-            <p>{{ countryToGuess.name }}</p>
-            <div class="grid grid-cols-2 grid-rows-2 gap-4">
-                <div v-for="country in countryPossibilities" :key="country.code" class="content-center">
-                    <img :src="country.flag"
-                        class="justify-self-center cursor-pointer border-4 transition-all"
-                        :class="getFlagBorderClass(country.code)"
-                        width="120px"
-                        height="80px" 
-                        @click="checkAnswer(country)" />
-                </div>
-            </div>
+            <GameQuestion :country-name="countryToGuess.name" />
+            
+            <FlagGrid 
+                :countries="countryPossibilities"
+                :selected-answer="selectedAnswer"
+                :correct-answer="countryToGuess.code"
+                @flag-selected="checkAnswer"
+            />
         </div>
     </div>
 </template>
