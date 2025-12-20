@@ -1,5 +1,29 @@
 [
   {
+    "name": "France",
+    "flag": "/images/flags/fr.svg",
+    "code": "FR",
+    "continent": "Europe"
+  },
+  {
+    "name": "Germany",
+    "flag": "/images/flags/de.svg",
+    "code": "DE",
+    "continent": "Europe"
+  },
+  {
+    "name": "United Kingdom",
+    "flag": "/images/flags/gb.svg",
+    "code": "UK",
+    "continent": "Europe"
+  },
+  {
+    "name": "Italy",
+    "flag": "/images/flags/it.svg",
+    "code": "IT",
+    "continent": "Europe"
+  },
+  {
     "name": "Australia",
     "flag": "/images/flags/au.svg",
     "code": "AU",
