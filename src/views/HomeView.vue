@@ -4,6 +4,7 @@ import FlagGrid from '@/components/game/FlagGrid.vue';
 import GameQuestion from '@/components/game/GameQuestion.vue';
 import ScoreDisplay from '@/components/game/ScoreDisplay.vue';
 import RegionButton from '@/components/game/RegionButton.vue';
+import Footer from '@/components/layout/Footer.vue';
 
 const gameStore = useGameStore();
 
@@ -59,4 +60,6 @@ function startGame(region) {
       </button>
     </div>
   </main>
+
+  <Footer />
 </template>
