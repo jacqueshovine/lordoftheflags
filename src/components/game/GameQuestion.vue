@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="game-question" style="text-align: center; margin: 1rem 0;">
-    <p style="font-size: 1.5rem; font-weight: 600;">{{ countryName }}</p>
+  <div class="text-center my-4">
+    <p class="text-2xl font-semibold">{{ countryName }}</p>
   </div>
 </template>

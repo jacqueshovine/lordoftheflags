@@ -30,14 +30,16 @@ function handleClick() {
 
 <template>
   <div 
-    class="flag-tile"
-    :class="{ 'disabled': isDisabled }"
+    class="cursor-pointer"
+    :class="{ 'pointer-events-none': isDisabled }"
     @click="handleClick"
   >
     <img 
       :src="getFlagUrl(country.code)"
       :alt="country.name"
-      style="cursor: pointer; width: 160px; height: auto;"
+      class="w-40 h-auto"
+      width="160px"
+      height="auto"
     />
   </div>
 </template>

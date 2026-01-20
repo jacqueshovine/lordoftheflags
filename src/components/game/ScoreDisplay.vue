@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="score-display" style="text-align: center; margin: 1rem 0;">
-    <p>Score: {{ currentScore }} | Best: {{ maxScore }}</p>
+  <div class="text-center my-4">
+    <p class="text-lg">Score: {{ currentScore }} | Best: {{ maxScore }}</p>
   </div>
 </template>

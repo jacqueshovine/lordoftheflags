@@ -20,8 +20,8 @@ const emit = defineEmits(['flag-selected']);
 </script>
 
 <template>
-  <div class="flag-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-    <div v-for="country in countries" :key="country.code" style="display: flex; justify-content: center;">
+  <div class="grid grid-cols-2 gap-4">
+    <div v-for="country in countries" :key="country.code" class="flex justify-center">
       <FlagTile
         :country="country"
         :selected-answer="selectedAnswer"

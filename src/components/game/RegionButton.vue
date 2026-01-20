@@ -19,11 +19,10 @@ const emit = defineEmits(['click']);
 
 <template>
   <button 
-    class="region-button"
-    style="display: block; width: 100%; padding: 0.75rem 1rem; margin: 0.5rem 0; cursor: pointer; text-align: left;"
+    class="block w-full py-3 px-4 my-2 cursor-pointer text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
     @click="emit('click')"
   >
-    <span>{{ region }}</span>
-    <span style="float: right;">{{ maxScore }} / {{ maxPossibleScore }}</span>
+    <span class="font-medium">{{ region }}</span>
+    <span class="float-right text-gray-600">{{ maxScore }} / {{ maxPossibleScore }}</span>
   </button>
 </template>
