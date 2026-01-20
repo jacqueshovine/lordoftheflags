@@ -21,6 +21,27 @@ const emit = defineEmits(['flag-selected']);
 
 const isDisabled = computed(() => props.selectedAnswer !== null);
 
+const borderClass = computed(() => {
+  if (!props.selectedAnswer) {
+    return 'border-transparent';
+  }
+  
+  const isCorrect = props.country.code === props.correctAnswer;
+  const isSelected = props.selectedAnswer === props.country.code;
+  
+  // Show green border on the correct answer
+  if (isCorrect) {
+    return 'border-green-500';
+  }
+  
+  // Show red border only on the selected wrong answer
+  if (isSelected && !isCorrect) {
+    return 'border-red-500';
+  }
+  
+  return 'border-transparent';
+});
+
 function handleClick() {
   if (!isDisabled.value) {
     emit('flag-selected', props.country);
@@ -37,9 +58,8 @@ function handleClick() {
     <img 
       :src="getFlagUrl(country.code)"
       :alt="country.name"
-      class="w-40 h-auto"
-      width="160px"
-      height="auto"
+      class="w-40 h-auto border-4 transition-colors duration-200"
+      :class="borderClass"
     />
   </div>
 </template>
