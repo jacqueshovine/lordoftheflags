@@ -1,17 +1,11 @@
 <script setup>
 import { useGameStore } from '@/stores/game';
 import FlagGrid from '@/components/game/FlagGrid.vue';
-import GameQuestion from '@/components/game/GameQuestion.vue';
 import ScoreDisplay from '@/components/game/ScoreDisplay.vue';
 import RegionButton from '@/components/game/RegionButton.vue';
 import Footer from '@/components/layout/Footer.vue';
 
 const gameStore = useGameStore();
-
-function startGame(region) {
-  const filter = region === 'World' ? null : region;
-  gameStore.initGame(filter);
-}
 </script>
 
 <template>
@@ -26,31 +20,18 @@ function startGame(region) {
         v-for="region in gameStore.regions"
         :key="region"
         :region="region"
-        :max-score="gameStore.regionScores[region].maxAchieved"
-        :max-possible-score="gameStore.regionScores[region].maxPossible"
-        @click="startGame(region)"
       />
     </div>
 
     <!-- Game Area (when game is running) -->
     <div v-if="gameStore.gameRunning">
-      <ScoreDisplay
-        :current-score="gameStore.currentScore"
-        :max-score="gameStore.currentMaxScore"
-      />
+      <ScoreDisplay/>
 
-      <GameQuestion 
-        v-if="gameStore.countryToGuess"
-        :country-name="gameStore.countryToGuess.name" 
-      />
+      <div v-if="gameStore.countryToGuess" class="text-center my-4">
+        <p class="text-2xl font-semibold">{{ gameStore.countryToGuess.name }}</p>
+      </div>
 
-      <FlagGrid
-        v-if="gameStore.countryPossibilities.length"
-        :countries="gameStore.countryPossibilities"
-        :selected-answer="gameStore.selectedAnswer"
-        :correct-answer="gameStore.countryToGuess?.code"
-        @flag-selected="gameStore.checkAnswer"
-      />
+      <FlagGrid v-if="gameStore.countryPossibilities.length" />
 
       <button 
         class="block mx-auto mt-8 py-2 px-4 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded transition-colors"

@@ -1,33 +1,26 @@
 <script setup>
 import { computed } from 'vue';
+import { useGameStore } from '@/stores/game';
 import { getFlagUrl } from '@/utils/helpers';
 
 const props = defineProps({
   country: {
     type: Object,
     required: true
-  },
-  selectedAnswer: {
-    type: String,
-    default: null
-  },
-  correctAnswer: {
-    type: String,
-    required: true
   }
 });
 
-const emit = defineEmits(['flag-selected']);
+const gameStore = useGameStore();
 
-const isDisabled = computed(() => props.selectedAnswer !== null);
+const isDisabled = computed(() => gameStore.selectedAnswer !== null);
 
 const borderClass = computed(() => {
-  if (!props.selectedAnswer) {
+  if (!gameStore.selectedAnswer) {
     return 'border-transparent';
   }
   
-  const isCorrect = props.country.code === props.correctAnswer;
-  const isSelected = props.selectedAnswer === props.country.code;
+  const isCorrect = props.country.code === gameStore.countryToGuess?.code;
+  const isSelected = gameStore.selectedAnswer === props.country.code;
   
   // Show green border on the correct answer
   if (isCorrect) {
@@ -44,7 +37,7 @@ const borderClass = computed(() => {
 
 function handleClick() {
   if (!isDisabled.value) {
-    emit('flag-selected', props.country);
+    gameStore.checkAnswer(props.country);
   }
 }
 </script>

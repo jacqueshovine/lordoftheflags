@@ -4,13 +4,15 @@ import { shuffle } from '@/utils/helpers';
 import countries from '@/data/countries.json';
 
 export const useGameStore = defineStore('game', () => {
-  // State
+  // ========================================================================================================================
+  // STATE -- State = Data (Variables)
+  // ========================================================================================================================
   const gameRunning = ref(false);
   const currentFilter = ref(null);
   const shuffledCountries = ref([]);
   const roundsLeft = ref(0);
   const currentScore = ref(0);
-  const selectedAnswer = ref(null);
+  const selectedAnswer = ref(null); // Used to highlight selected and wrong answers across FlagTile components
   const countryToGuess = ref(null);
   const countryPossibilities = ref([]);
   
@@ -25,15 +27,17 @@ export const useGameStore = defineStore('game', () => {
 
   const regions = ['World', 'Africa', 'America', 'Asia', 'Europe', 'Oceania'];
 
-  // Getters
-  const filteredCountries = computed(() => {
+  // ========================================================================================================================
+  // GETTERS -- Computed/Derived Values (Read-only)
+  // ========================================================================================================================
+  const getFilteredCountries = computed(() => {
     if (currentFilter.value) {
       return countries.filter(country => country.continent === currentFilter.value);
     }
     return countries;
   });
 
-  const regionScores = computed(() => {
+  const getRegionScores = computed(() => {
     const scores = {};
     
     regions.forEach(region => {
@@ -50,16 +54,24 @@ export const useGameStore = defineStore('game', () => {
     return scores;
   });
 
-  const currentRegion = computed(() => currentFilter.value || 'World');
+  const getCurrentRegion = computed(() => currentFilter.value || 'World');
 
-  const currentMaxScore = computed(() => {
-    return regionScores.value[currentRegion.value]?.maxAchieved || 0;
+  const getCurrentMaxScore = computed(() => {
+    return getRegionScores.value[getCurrentRegion.value]?.maxAchieved || 0;
   });
 
-  // Actions
+  const getTotalRounds = computed(() => getFilteredCountries.value.length);
+
+  const getCurrentRound = computed(() => {
+    return getTotalRounds.value - roundsLeft.value;
+  });
+
+  // ========================================================================================================================
+  // ACTIONS -- Methods : Write (Functions that can modify state)
+  // ========================================================================================================================
   function initGame(filter = null) {
     currentFilter.value = filter;
-    shuffledCountries.value = shuffle([...filteredCountries.value]);
+    shuffledCountries.value = shuffle([...getFilteredCountries.value]);
     gameRunning.value = true;
     currentScore.value = 0;
     roundsLeft.value = shuffledCountries.value.length;
@@ -77,7 +89,7 @@ export const useGameStore = defineStore('game', () => {
     roundsLeft.value--;
 
     // Get 3 wrong answers
-    let countryList = shuffle([...filteredCountries.value]);
+    let countryList = shuffle([...getFilteredCountries.value]);
     const wrongCountries = countryList
       .filter(country => country.code !== countryToGuess.value.code)
       .slice(0, 3);
@@ -106,7 +118,7 @@ export const useGameStore = defineStore('game', () => {
     gameRunning.value = false;
     
     // Update the max score for the current region
-    const region = currentRegion.value;
+    const region = getCurrentRegion.value;
     if (currentScore.value > maxAchievedScores.value[region]) {
       maxAchievedScores.value[region] = currentScore.value;
     }
@@ -138,10 +150,12 @@ export const useGameStore = defineStore('game', () => {
     regions,
     
     // Getters
-    filteredCountries,
-    regionScores,
-    currentRegion,
-    currentMaxScore,
+    getFilteredCountries,
+    getRegionScores,
+    getCurrentRegion,
+    getCurrentMaxScore,
+    getTotalRounds,
+    getCurrentRound,
     
     // Actions
     initGame,
