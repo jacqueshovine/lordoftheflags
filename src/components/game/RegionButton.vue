@@ -25,6 +25,7 @@ function handleClick() {
     @click="handleClick"
   >
     <span class="font-medium">{{ region }}</span>
-    <span class="float-right text-gray-600">{{ regionScore.maxAchieved }} / {{ regionScore.maxPossible }}</span>
+    <span v-if="gameStore.currentMode.id === 'classic'" class="float-right text-gray-600">{{ regionScore.maxAchieved }} / {{ regionScore.maxPossible }}</span>
+    <span v-else-if="gameStore.currentMode.id === 'timer'" class="float-right text-gray-600">{{ regionScore.maxAchieved }}</span>
   </button>
 </template>

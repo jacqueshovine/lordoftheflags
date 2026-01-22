@@ -6,6 +6,10 @@ import RegionButton from '@/components/game/RegionButton.vue';
 import Footer from '@/components/layout/Footer.vue';
 
 const gameStore = useGameStore();
+
+function setCurrentMode(mode) {
+  gameStore.setMode(mode);
+}
 </script>
 
 <template>
@@ -13,11 +17,23 @@ const gameStore = useGameStore();
     <h1 class="text-3xl font-bold text-center">Lord of the Flags</h1>
     <p class="text-center text-gray-600">Guess the flag!</p>
 
+    <!-- Mode Selection -->
+    <div v-if="!gameStore.gameRunning" class="mt-8">
+      <button 
+        v-for="mode in gameStore.modes"
+        :key="mode.id"
+        class="btn-primary mb-4 mx-2"
+        @click="setCurrentMode(mode)"
+      >
+        {{ mode.icon }}
+      </button>
+    </div>
+
     <!-- Region Selection (when game is not running) -->
     <div v-if="!gameStore.gameRunning" class="mt-8">
       <h2 class="text-xl font-semibold mb-4">Select a Region</h2>
       <RegionButton
-        v-for="region in gameStore.regions"
+        v-for="region in gameStore.getRegions"
         :key="region"
         :region="region"
       />
