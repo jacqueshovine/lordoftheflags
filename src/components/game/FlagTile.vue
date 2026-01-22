@@ -22,6 +22,7 @@ const borderClass = computed(() => {
   const isCorrect = props.country.code === gameStore.countryToGuess?.code;
   const isSelected = gameStore.selectedAnswer === props.country.code;
   
+  // TO DO Move hard coded colors to CSS classes
   // Show green border on the correct answer
   if (isCorrect) {
     return 'border-green-500';

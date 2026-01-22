@@ -21,7 +21,7 @@ function handleClick() {
 
 <template>
   <button 
-    class="block w-full py-3 px-4 my-2 cursor-pointer text-left bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+    class="btn-full btn-secondary text-left"
     @click="handleClick"
   >
     <span class="font-medium">{{ region }}</span>

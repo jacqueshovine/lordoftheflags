@@ -1,0 +1,26 @@
+.btn-base {
+  @apply 
+    cursor-pointer 
+    rounded-lg 
+    transition-colors
+    py-3 px-4 my-2;
+}
+
+.btn-primary {
+    @apply 
+    btn-base
+    bg-blue-500 hover:bg-blue-600
+    text-white;
+}
+
+.btn-secondary {
+  @apply 
+    btn-base
+    bg-gray-100 hover:bg-gray-200;
+}
+
+.btn-full {
+  @apply 
+    btn-base
+    w-full;
+}

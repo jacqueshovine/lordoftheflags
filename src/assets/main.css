@@ -2,6 +2,9 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+@import "./variables.css";
+@import "./button.css";
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

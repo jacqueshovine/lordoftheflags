@@ -34,7 +34,7 @@ const gameStore = useGameStore();
       <FlagGrid v-if="gameStore.countryPossibilities.length" />
 
       <button 
-        class="block mx-auto mt-8 py-2 px-4 cursor-pointer bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+        class="btn-primary block mx-auto"
         @click="gameStore.resetGame"
       >
         Quit Game
