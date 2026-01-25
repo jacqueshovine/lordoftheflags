@@ -15,7 +15,8 @@ function setCurrentMode(mode) {
 <template>
   <main class="max-w-xl mx-auto p-4">
     <h1 class="text-3xl font-bold text-center">Lord of the Flags</h1>
-    <p class="text-center text-gray-600">Guess the flag!</p>
+    <p class="text-xl text-center text-gray-600">{{ gameStore.currentMode.name }}</p>
+    <p class="text-center text-gray-600">{{ gameStore.currentMode.description }}</p>
 
     <!-- Mode Selection -->
     <div v-if="!gameStore.gameRunning" class="mt-8">
@@ -43,11 +44,11 @@ function setCurrentMode(mode) {
     <div v-if="gameStore.gameRunning">
       <ScoreDisplay/>
 
-      <div v-if="gameStore.countryToGuess" class="text-center my-4">
-        <p class="text-2xl font-semibold">{{ gameStore.countryToGuess.name }}</p>
+      <div v-if="gameStore.flagToGuess" class="text-center my-4">
+        <p class="text-2xl font-semibold">{{ gameStore.flagToGuess.name }}</p>
       </div>
 
-      <FlagGrid v-if="gameStore.countryPossibilities.length" />
+      <FlagGrid v-if="gameStore.flagPossibilities.length" />
 
       <button 
         class="btn-primary block mx-auto"

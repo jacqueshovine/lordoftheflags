@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { shuffle } from '@/utils/helpers';
-import countries from '@/data/countries.json';
+import flags from '@/data/countries.json';
 import classicMode from '@/modes/classic.js';
 import timerMode from '@/modes/timer.js';
 
@@ -14,13 +14,13 @@ export const useGameStore = defineStore('game', () => {
   const gameRunning = ref(false);
   const timer = ref(null);
   const currentFilter = ref(null);
-  const shuffledCountries = ref([]);
+  const shuffledFlags = ref([]);
   const roundsLeft = ref(0);
   const currentScore = ref(0);
   const selectedAnswer = ref(null);
-  const countryToGuess = ref(null);
-  const countryPossibilities = ref([]);
-  const currentRound = ref(0);
+  const flagToGuess = ref(null);
+  const flagPossibilities = ref([]);
+  const roundCount = ref(0);
   
   // Scores organized by mode, then by region (initialized dynamically in setMode)
   const maxAchievedScores = ref({});
@@ -30,11 +30,11 @@ export const useGameStore = defineStore('game', () => {
   // ========================================================================================================================
   const getRegions = computed(() => currentMode.value?.regions || []);
 
-  const getFilteredCountries = computed(() => {
+  const getFilteredFlags = computed(() => {
     if (currentFilter.value) {
-      return countries.filter(country => country.continent === currentFilter.value);
+      return flags.filter(flag => flag.continent === currentFilter.value);
     }
-    return countries;
+    return flags;
   });
 
   const getRegionScores = computed(() => {
@@ -43,8 +43,8 @@ export const useGameStore = defineStore('game', () => {
     
     getRegions.value.forEach(region => {
       const maxPossible = region === 'World' 
-        ? countries.length
-        : countries.filter(c => c.continent === region).length;
+        ? flags.length
+        : flags.filter(f => f.continent === region).length;
       
       scores[region] = {
         maxPossible,
@@ -61,10 +61,10 @@ export const useGameStore = defineStore('game', () => {
     return getRegionScores.value[getCurrentRegion.value]?.maxAchieved || 0;
   });
 
-  const getTotalRounds = computed(() => getFilteredCountries.value.length);
+  const getTotalRounds = computed(() => getFilteredFlags.value.length);
 
   const getCurrentRound = computed(() => {
-    return currentMode.value.id === 'classic' ? getTotalRounds.value - roundsLeft.value : currentRound.value;
+    return currentMode.value.getCurrentRound(getTotalRounds.value, roundsLeft.value, roundCount.value);
   });
 
   // ========================================================================================================================
@@ -84,21 +84,20 @@ export const useGameStore = defineStore('game', () => {
 
   function initGame(filter = null) {
     currentFilter.value = filter;
-    shuffledCountries.value = shuffle([...getFilteredCountries.value]);
+    shuffledFlags.value = shuffle([...getFilteredFlags.value]);
     gameRunning.value = true;
     currentScore.value = 0;
-    currentRound.value = 0;
+    roundCount.value = 0;
 
-    // If timer mode, rounds are infinite until the timer runs out
-    if (currentMode.value?.hasTimer) {
-      roundsLeft.value = Infinity;
+    // Let the mode decide how many rounds
+    roundsLeft.value = currentMode.value.initRounds(shuffledFlags.value.length);
+
+    // Start timer if mode uses one
+    if (currentMode.value.hasTimer) {
       timer.value = setTimeout(() => {
         console.log('Time over'); // Remove when able to display timer
         endGame();
       }, currentMode.value.timerDuration * 1000);
-    // Otherwise, set rounds to the number of countries in the filtered list
-    } else {
-      roundsLeft.value = shuffledCountries.value.length;
     }
 
     nextRound();
@@ -110,33 +109,34 @@ export const useGameStore = defineStore('game', () => {
       return;
     }
 
-    if (currentMode.value.hasTimer) {
-      currentRound.value++;
-      const randomIndex = Math.floor(Math.random() * shuffledCountries.value.length);
-      countryToGuess.value = shuffledCountries.value[randomIndex];
-    } else {
-      const currentIndex = shuffledCountries.value.length - roundsLeft.value;
-      countryToGuess.value = shuffledCountries.value[currentIndex];
+    // Pick the next flag to guess
+    const currentIndex = shuffledFlags.value.length - roundsLeft.value;
+    flagToGuess.value = currentMode.value.pickNextFlag(shuffledFlags.value, currentIndex, flagToGuess.value);
+    
+    // Update round tracking
+    roundCount.value++;
+    if (roundsLeft.value !== Infinity) {
       roundsLeft.value--;
     }
 
-    // Get 3 wrong answers
-    let countryList = shuffle([...getFilteredCountries.value]);
-    const wrongCountries = countryList
-      .filter(country => country.code !== countryToGuess.value.code)
-      .slice(0, 3);
+    // Get wrong answers based on mode setting
+    const wrongCount = currentMode.value.wrongAnswersCount || 3;
+    let flagList = shuffle([...getFilteredFlags.value]);
+    const wrongFlags = flagList
+      .filter(flag => flag.code !== flagToGuess.value.code)
+      .slice(0, wrongCount);
 
     // Combine correct answer with wrong answers and shuffle
-    countryPossibilities.value = shuffle([
-      countryToGuess.value,
-      ...wrongCountries,
+    flagPossibilities.value = shuffle([
+      flagToGuess.value,
+      ...wrongFlags,
     ]);
   }
 
-  function checkAnswer(selectedCountry) {
-    selectedAnswer.value = selectedCountry.code;
+  function checkAnswer(selectedFlag) {
+    selectedAnswer.value = selectedFlag.code;
     
-    if (selectedCountry.code === countryToGuess.value.code) {
+    if (selectedFlag.code === flagToGuess.value.code) {
       currentScore.value++;
     }
     
@@ -148,6 +148,12 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function endGame() {
+    // Clear timer if running
+    if (timer.value) {
+      clearTimeout(timer.value);
+      timer.value = null;
+    }
+    
     gameRunning.value = false;
     
     // Update the max score for the current mode and region
@@ -167,14 +173,14 @@ export const useGameStore = defineStore('game', () => {
       timer.value = null;
     }
     gameRunning.value = false;
-    currentRound.value = 0;
+    roundCount.value = 0;
     currentFilter.value = null;
-    shuffledCountries.value = [];
+    shuffledFlags.value = [];
     roundsLeft.value = 0;
     currentScore.value = 0;
     selectedAnswer.value = null;
-    countryToGuess.value = null;
-    countryPossibilities.value = [];
+    flagToGuess.value = null;
+    flagPossibilities.value = [];
   }
 
   return {
@@ -186,13 +192,13 @@ export const useGameStore = defineStore('game', () => {
     roundsLeft,
     currentScore,
     selectedAnswer,
-    countryToGuess,
-    countryPossibilities,
+    flagToGuess,
+    flagPossibilities,
     maxAchievedScores,
     
     // Getters
     getRegions,
-    getFilteredCountries,
+    getFilteredFlags,
     getRegionScores,
     getCurrentRegion,
     getCurrentMaxScore,

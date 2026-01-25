@@ -4,7 +4,7 @@ import { useGameStore } from '@/stores/game';
 import { getFlagUrl } from '@/utils/helpers';
 
 const props = defineProps({
-  country: {
+  flag: {
     type: Object,
     required: true
   }
@@ -19,8 +19,8 @@ const borderClass = computed(() => {
     return 'border-transparent';
   }
   
-  const isCorrect = props.country.code === gameStore.countryToGuess?.code;
-  const isSelected = gameStore.selectedAnswer === props.country.code;
+  const isCorrect = props.flag.code === gameStore.flagToGuess?.code;
+  const isSelected = gameStore.selectedAnswer === props.flag.code;
   
   // TO DO Move hard coded colors to CSS classes
   // Show green border on the correct answer
@@ -38,7 +38,7 @@ const borderClass = computed(() => {
 
 function handleClick() {
   if (!isDisabled.value) {
-    gameStore.checkAnswer(props.country);
+    gameStore.checkAnswer(props.flag);
   }
 }
 </script>
@@ -50,8 +50,8 @@ function handleClick() {
     @click="handleClick"
   >
     <img 
-      :src="getFlagUrl(country.code)"
-      :alt="country.name"
+      :src="getFlagUrl(flag.code)"
+      :alt="flag.name"
       class="w-40 h-auto border-4 transition-colors duration-200"
       :class="borderClass"
     />
