@@ -12,6 +12,7 @@ export const useGameStore = defineStore('game', () => {
   const modes = { classic: classicMode, timer: timerMode };
   const currentMode = ref(classicMode);
   const gameRunning = ref(false);
+  const gameEnding = ref(false);
   const timer = ref(null);
   const currentFilter = ref(null);
   const shuffledFlags = ref([]);
@@ -154,8 +155,15 @@ export const useGameStore = defineStore('game', () => {
       timer.value = null;
     }
     
-    gameRunning.value = false;
-    
+    gameEnding.value = true;
+  }
+
+  function resetGame(playAgain = false) {
+    if (timer.value) {
+      clearTimeout(timer.value);
+      timer.value = null;
+    }
+
     // Update the max score for the current mode and region
     const modeId = currentMode.value?.id;
     const region = getCurrentRegion.value;
@@ -165,29 +173,32 @@ export const useGameStore = defineStore('game', () => {
     }
     
     currentScore.value = 0;
-  }
-
-  function resetGame() {
-    if (timer.value) {
-      clearTimeout(timer.value);
-      timer.value = null;
-    }
     gameRunning.value = false;
+    gameEnding.value = false;
     roundCount.value = 0;
-    currentFilter.value = null;
     shuffledFlags.value = [];
     roundsLeft.value = 0;
     currentScore.value = 0;
     selectedAnswer.value = null;
     flagToGuess.value = null;
     flagPossibilities.value = [];
+
+    if (playAgain) {
+      initGame(currentFilter.value);
+    } else {
+      currentFilter.value = null;
+    }
   }
+
+  // Initialize default mode's scores on store setup
+  setMode(classicMode);
 
   return {
     // State
     modes,
     currentMode,
     gameRunning,
+    gameEnding,
     currentFilter,
     roundsLeft,
     currentScore,

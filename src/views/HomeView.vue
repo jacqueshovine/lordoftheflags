@@ -2,6 +2,7 @@
 import { useGameStore } from '@/stores/game';
 import FlagGrid from '@/components/game/FlagGrid.vue';
 import ScoreDisplay from '@/components/game/ScoreDisplay.vue';
+import ResultsDisplay from '@/components/game/ResultsDisplay.vue';
 import RegionButton from '@/components/game/RegionButton.vue';
 import Footer from '@/components/layout/Footer.vue';
 
@@ -41,7 +42,7 @@ function setCurrentMode(mode) {
     </div>
 
     <!-- Game Area (when game is running) -->
-    <div v-if="gameStore.gameRunning">
+    <div v-if="gameStore.gameRunning && !gameStore.gameEnding">
       <ScoreDisplay/>
 
       <div v-if="gameStore.flagToGuess" class="text-center my-4">
@@ -52,11 +53,13 @@ function setCurrentMode(mode) {
 
       <button 
         class="btn-primary block mx-auto"
-        @click="gameStore.resetGame"
+        @click="gameStore.resetGame()"
       >
         Quit Game
       </button>
     </div>
+
+    <ResultsDisplay v-if="gameStore.gameEnding" />
   </main>
 
   <Footer />
