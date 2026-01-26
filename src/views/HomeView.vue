@@ -5,6 +5,7 @@ import ScoreDisplay from '@/components/game/ScoreDisplay.vue';
 import ResultsDisplay from '@/components/game/ResultsDisplay.vue';
 import RegionButton from '@/components/game/RegionButton.vue';
 import Footer from '@/components/layout/Footer.vue';
+import Timer from '@/components/ui/Timer.vue';
 
 const gameStore = useGameStore();
 
@@ -44,6 +45,12 @@ function setCurrentMode(mode) {
     <!-- Game Area (when game is running) -->
     <div v-if="gameStore.gameRunning && !gameStore.gameEnding">
       <ScoreDisplay/>
+
+      <Timer 
+        v-if="gameStore.currentMode.hasTimer" 
+        :duration="gameStore.currentMode.timerDuration"
+        @timeUp="gameStore.endGame"
+      />
 
       <div v-if="gameStore.flagToGuess" class="text-center my-4">
         <p class="text-2xl font-semibold">{{ gameStore.flagToGuess.name }}</p>

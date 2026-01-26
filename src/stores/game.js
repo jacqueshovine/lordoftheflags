@@ -13,7 +13,6 @@ export const useGameStore = defineStore('game', () => {
   const currentMode = ref(classicMode);
   const gameRunning = ref(false);
   const gameEnding = ref(false);
-  const timer = ref(null);
   const currentFilter = ref(null);
   const shuffledFlags = ref([]);
   const roundsLeft = ref(0);
@@ -93,14 +92,6 @@ export const useGameStore = defineStore('game', () => {
     // Let the mode decide how many rounds
     roundsLeft.value = currentMode.value.initRounds(shuffledFlags.value.length);
 
-    // Start timer if mode uses one
-    if (currentMode.value.hasTimer) {
-      timer.value = setTimeout(() => {
-        console.log('Time over'); // Remove when able to display timer
-        endGame();
-      }, currentMode.value.timerDuration * 1000);
-    }
-
     nextRound();
   }
 
@@ -149,21 +140,10 @@ export const useGameStore = defineStore('game', () => {
   }
 
   function endGame() {
-    // Clear timer if running
-    if (timer.value) {
-      clearTimeout(timer.value);
-      timer.value = null;
-    }
-    
     gameEnding.value = true;
   }
 
   function resetGame(playAgain = false) {
-    if (timer.value) {
-      clearTimeout(timer.value);
-      timer.value = null;
-    }
-
     // Update the max score for the current mode and region
     const modeId = currentMode.value?.id;
     const region = getCurrentRegion.value;
