@@ -12,11 +12,11 @@ All the cool stuff I've added to this game!
 - Added mode config files
 - Refactored game store: Extract mode specific logic in variables and hooks in config files
 - Refactored variables naming: replace "countries" by "flags" (in anticipation of upcoming Flag Sets)
-
-### Technical
 - Improved logic consistency and cleaned code
-    - Using Pinia store, no more prop drilling
+- Switched to Pinia store, no more prop drilling
 - Refactored CSS
+- Fixed styling issues
+- Implemented flags preloading
 
 ## [0.1.0] - The Beginning
 

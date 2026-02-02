@@ -17,8 +17,10 @@ function setCurrentMode(mode) {
 <template>
   <main class="max-w-xl mx-auto p-4">
     <h1 class="text-3xl font-bold text-center">Lord of the Flags</h1>
-    <p class="text-xl text-center">{{ gameStore.currentMode.name }}</p>
-    <p class="text-center">{{ gameStore.currentMode.description }}</p>
+    <div class="h-20 flex flex-col items-center justify-center">
+      <p class="text-xl text-center">{{ gameStore.currentMode.name }}</p>
+      <p class="text-center">{{ gameStore.currentMode.description }}</p>
+    </div>
 
     <!-- Mode Selection -->
     <div v-if="!gameStore.gameRunning" class="mt-8">
