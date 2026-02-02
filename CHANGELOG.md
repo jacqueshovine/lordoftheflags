@@ -2,6 +2,14 @@
 
 All the cool stuff I've added to this game!
 
+## [0.3.0]
+
+### Features
+- Complete flag list with most world country flags
+
+### Technical
+
+
 ## [0.2.0]
 
 ### Features

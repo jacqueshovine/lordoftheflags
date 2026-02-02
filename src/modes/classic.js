@@ -8,6 +8,7 @@ export default {
   // SETTINGS
   // ========================================================================================================================
   hasRegions: true,
+  // Antarctica is included only in World region to avoid displaying it alone
   regions: ['World', 'Africa', 'America', 'Asia', 'Europe', 'Oceania'],
   hasTimer: false,
   feedbackDelay: 1500,
