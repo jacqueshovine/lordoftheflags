@@ -6,6 +6,7 @@ import ResultsDisplay from '@/components/game/ResultsDisplay.vue';
 import RegionButton from '@/components/game/RegionButton.vue';
 import Footer from '@/components/layout/Footer.vue';
 import Timer from '@/components/ui/Timer.vue';
+import Loader from '@/components/ui/Loader.vue';
 
 const gameStore = useGameStore();
 
@@ -22,8 +23,11 @@ function setCurrentMode(mode) {
       <p class="text-center">{{ gameStore.currentMode.description }}</p>
     </div>
 
+    <!-- Loader (when loading flags) -->
+    <Loader v-if="gameStore.loading" />
+
     <!-- Mode Selection -->
-    <div v-if="!gameStore.gameRunning" class="mt-8">
+    <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mt-8">
       <button 
         v-for="mode in gameStore.modes"
         :key="mode.id"
@@ -35,7 +39,7 @@ function setCurrentMode(mode) {
     </div>
 
     <!-- Region Selection (when game is not running) -->
-    <div v-if="!gameStore.gameRunning" class="mt-8">
+    <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mt-8">
       <h2 class="text-xl font-semibold mb-4">Select a Region</h2>
       <RegionButton
         v-for="region in gameStore.getRegions"
