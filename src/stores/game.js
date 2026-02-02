@@ -23,6 +23,9 @@ export const useGameStore = defineStore('game', () => {
   const flagPossibilities = ref([]);
   const roundCount = ref(0);
   
+  // Keep references to preloaded images to prevent garbage collection
+  const preloadedImages = ref([]);
+  
   // Scores organized by mode, then by region (initialized dynamically in setMode)
   const maxAchievedScores = ref({});
 
@@ -91,8 +94,8 @@ export const useGameStore = defineStore('game', () => {
     roundCount.value = 0;
 
     // Preload ALL flags from the filtered set (since any can appear as wrong answers)
-    // Wait for all to load before starting to ensure smooth gameplay
-    await preloadFlags(getFilteredFlags.value);
+    // Keep references to prevent garbage collection and ensure they stay cached
+    preloadedImages.value = await preloadFlags(getFilteredFlags.value);
 
     loading.value = false;
     gameRunning.value = true;
@@ -171,6 +174,7 @@ export const useGameStore = defineStore('game', () => {
     selectedAnswer.value = null;
     flagToGuess.value = null;
     flagPossibilities.value = [];
+    preloadedImages.value = [];
 
     if (playAgain) {
       initGame(currentFilter.value);

@@ -23,18 +23,20 @@ export function getFlagUrl(code) {
 
 /**
  * Preloads flag images for better performance
+ * Keeps references to loaded images to prevent garbage collection
  * @param {Array} flags - Array of flag objects with code property
- * @returns {Promise} - Promise that resolves when all flags are loaded
+ * @returns {Promise<Array>} - Promise that resolves with array of loaded images
  */
 export function preloadFlags(flags) {
   const promises = flags.map(flag => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const img = new Image();
-      img.onload = resolve;
-      img.onerror = resolve; // Resolve even on error to not block the game
+      img.onload = () => resolve(img);
+      img.onerror = () => resolve(img); // Resolve even on error to not block the game
       img.src = getFlagUrl(flag.code);
     });
   });
   
+  // Return both the promise and the array of images
   return Promise.all(promises);
 }
