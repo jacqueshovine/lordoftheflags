@@ -17,15 +17,15 @@ function setCurrentMode(mode) {
 <template>
   <main class="max-w-xl mx-auto p-4">
     <h1 class="text-3xl font-bold text-center">Lord of the Flags</h1>
-    <p class="text-xl text-center text-gray-600">{{ gameStore.currentMode.name }}</p>
-    <p class="text-center text-gray-600">{{ gameStore.currentMode.description }}</p>
+    <p class="text-xl text-center">{{ gameStore.currentMode.name }}</p>
+    <p class="text-center">{{ gameStore.currentMode.description }}</p>
 
     <!-- Mode Selection -->
     <div v-if="!gameStore.gameRunning" class="mt-8">
       <button 
         v-for="mode in gameStore.modes"
         :key="mode.id"
-        class="btn-primary mb-4 mx-2"
+        class="btn-reversed mb-4 mx-2"
         @click="setCurrentMode(mode)"
       >
         {{ mode.icon }}

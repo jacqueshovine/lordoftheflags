@@ -5,6 +5,15 @@
 @import "./variables.css";
 @import "./button.css";
 
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+/* Game feedback borders */
+.border-correct { border-color: var(--color-correct); }
+.border-wrong { border-color: var(--color-wrong); }
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

@@ -135,6 +135,7 @@ export const useGameStore = defineStore('game', () => {
     const delay = currentMode.value?.feedbackDelay || 1500;
     setTimeout(() => {
       selectedAnswer.value = null;
+      flagToGuess.value = null;
       nextRound();
     }, delay);
   }

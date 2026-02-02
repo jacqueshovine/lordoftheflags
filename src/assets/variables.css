@@ -1,8 +1,22 @@
-/* TO DO  */
-/* :root {
-  --color-primary: #3b82f6;
-  --color-correct: #10b981;
-  --color-wrong: #ef4444;
-  --color-bg: #ffffff;
-  --color-text: #1f2937;
-} */
+:root {
+  /* Base Colors - Main Palette */
+  --color-charcoal: #353535;
+  --color-teal: #3C6E71;
+  --color-white: #FFFFFF;
+  --color-light-gray: #D9D9D9;
+  --color-navy: #284B63;
+
+  /* Feedback Colors - Complementary to palette */
+  --color-green: #5A9E6F;
+  --color-red: #A63D40;
+
+  /* Semantic Color Mappings */
+  --color-primary: var(--color-teal);
+  --color-secondary: var(--color-navy);
+  --color-background: var(--color-white);
+  --color-text: var(--color-charcoal);
+
+  /* Game-Specific */
+  --color-correct: var(--color-green);
+  --color-wrong: var(--color-red);
+}

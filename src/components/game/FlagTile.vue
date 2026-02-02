@@ -22,15 +22,14 @@ const borderClass = computed(() => {
   const isCorrect = props.flag.code === gameStore.flagToGuess?.code;
   const isSelected = gameStore.selectedAnswer === props.flag.code;
   
-  // TO DO Move hard coded colors to CSS classes
-  // Show green border on the correct answer
+  // Show colored border on the correct answer
   if (isCorrect) {
-    return 'border-green-500';
+    return 'border-correct';
   }
   
-  // Show red border only on the selected wrong answer
+  // Show colored border only on the selected wrong answer
   if (isSelected && !isCorrect) {
-    return 'border-red-500';
+    return 'border-wrong';
   }
   
   return 'border-transparent';
