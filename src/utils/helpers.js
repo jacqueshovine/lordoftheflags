@@ -20,3 +20,21 @@ export function shuffle(array) {
 export function getFlagUrl(code) {
   return new URL(`../assets/world_flags/${code.toLowerCase()}.svg`, import.meta.url).href;
 }
+
+/**
+ * Preloads flag images for better performance
+ * @param {Array} flags - Array of flag objects with code property
+ * @returns {Promise} - Promise that resolves when all flags are loaded
+ */
+export function preloadFlags(flags) {
+  const promises = flags.map(flag => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = resolve;
+      img.onerror = resolve; // Resolve even on error to not block the game
+      img.src = getFlagUrl(flag.code);
+    });
+  });
+  
+  return Promise.all(promises);
+}

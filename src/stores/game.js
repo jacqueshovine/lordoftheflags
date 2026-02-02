@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
-import { shuffle } from '@/utils/helpers';
+import { shuffle, preloadFlags } from '@/utils/helpers';
 import flags from '@/data/countries.json';
 import classicMode from '@/modes/classic.js';
 import timerMode from '@/modes/timer.js';
@@ -82,12 +82,25 @@ export const useGameStore = defineStore('game', () => {
     }
   }
 
-  function initGame(filter = null) {
+  async function initGame(filter = null) {
     currentFilter.value = filter;
     shuffledFlags.value = shuffle([...getFilteredFlags.value]);
     gameRunning.value = true;
     currentScore.value = 0;
     roundCount.value = 0;
+
+    // Preload images: wait for first 15 flags, then load rest in background
+    const allFlags = getFilteredFlags.value;
+    const firstBatch = allFlags.slice(0, 15);
+    const remainingFlags = allFlags.slice(15);
+    
+    // Wait for first batch to load before starting
+    await preloadFlags(firstBatch);
+    
+    // Load remaining flags in background (don't wait)
+    if (remainingFlags.length > 0) {
+      preloadFlags(remainingFlags);
+    }
 
     // Let the mode decide how many rounds
     roundsLeft.value = currentMode.value.initRounds(shuffledFlags.value.length);
