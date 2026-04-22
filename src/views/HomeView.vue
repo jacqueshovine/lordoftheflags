@@ -17,7 +17,7 @@ function setCurrentMode(mode) {
 
 <template>
   <main class="max-w-xl mx-auto p-4">
-    <h1 class="text-3xl font-bold text-center">Lord of the Flags</h1>
+    <h1 class="game-title">Lord of the Flags</h1>
     <div class="h-20 flex flex-col items-center justify-center">
       <p class="text-xl text-center">{{ gameStore.currentMode.name }}</p>
       <p class="text-center">{{ gameStore.currentMode.description }}</p>
@@ -40,12 +40,14 @@ function setCurrentMode(mode) {
 
     <!-- Region Selection (when game is not running) -->
     <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mt-8">
-      <h2 class="text-xl font-semibold mb-4">Select a Region</h2>
-      <RegionButton
-        v-for="region in gameStore.getRegions"
-        :key="region"
-        :region="region"
-      />
+      <p class="kicker mb-4">Select a Region</p>
+      <div class="flex flex-col gap-2">
+        <RegionButton
+          v-for="region in gameStore.getRegions"
+          :key="region"
+          :region="region"
+        />
+      </div>
     </div>
 
     <!-- Game Area (when game is running) -->
@@ -77,3 +79,15 @@ function setCurrentMode(mode) {
 
   <Footer />
 </template>
+
+<style scoped>
+.game-title {
+  font-family: var(--font-title);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--earth-900);
+  text-align: center;
+  margin: 0 0 var(--space-4);
+}
+</style>
