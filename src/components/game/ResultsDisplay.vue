@@ -13,7 +13,7 @@ const isNewRecord = computed(() => gameStore.currentScore > gameStore.getCurrent
       <div class="results-panel">
         <div class="over">— Game Over —</div>
         <div class="score">{{ gameStore.currentScore }}</div>
-        <div class="best">Best: {{ gameStore.getCurrentMaxScore }}</div>
+        <div class="best">Best: {{ gameStore.getCurrentMaxScore == 0 ? gameStore.currentScore : gameStore.getCurrentMaxScore }}</div>
       </div>
       <div v-if="isNewRecord" class="stamp-wrap">
         <span class="stamp">New Record</span>
