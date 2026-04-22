@@ -1,0 +1,383 @@
+/* =====================================================================
+   Lord of the Flags — Design System
+   Nostalgic / retro-web, cartographic palette
+   ===================================================================== */
+
+/* ---------------------- Typography (Google Fonts) -------------------- */
+/* Display — IM Fell DW Pica: antique map / atlas engraving feel       */
+/* Body    — Fraunces: warm contemporary serif with vintage spirit     */
+/* UI      — Work Sans: clean sans for small UI labels                 */
+/* Mono    — JetBrains Mono: codes (ISO), timers                       */
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=IM+Fell+DW+Pica+SC&family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  /* ==================== CARTOGRAPHIC PALETTE ==================== */
+  /* Parchment & paper — warm creams, weathered paper                */
+  --parchment-50:  #FBF6E9;   /* page bg, lightest parchment         */
+  --parchment-100: #F4ECD4;   /* card bg, warmer paper               */
+  --parchment-200: #E8DCB8;   /* tinted panels                       */
+  --parchment-300: #D9C79A;   /* dividers, rules                     */
+
+  /* Ocean — map waters, vintage blues                              */
+  --ocean-100: #C7D9E0;       /* shallow seas, hovers                */
+  --ocean-300: #6B8FA3;       /* mid ocean                           */
+  --ocean-500: #3A6D8C;       /* deep ocean, primary accent          */
+  --ocean-700: #254B63;       /* abyss, text on parchment            */
+  --ocean-900: #15324A;       /* ink                                 */
+
+  /* Forest — map land masses, old growth                           */
+  --forest-100: #D5DCBC;       /* pastures                            */
+  --forest-300: #8FA57A;       /* hills                               */
+  --forest-500: #5C7A4F;       /* forests, correct answer             */
+  --forest-700: #3E5637;       /* deep forest                         */
+
+  /* Earth — browns, compass, wood                                  */
+  --earth-100: #E5D4BA;        /* dunes                               */
+  --earth-300: #BFA17A;        /* sand / trade routes                 */
+  --earth-500: #8C6A43;        /* saddle, terracotta trim             */
+  --earth-700: #5E462B;        /* ink stamp, leather                  */
+  --earth-900: #3A2C1C;        /* deepest ink                         */
+
+  /* Accents — vintage travel stamp reds & gold                      */
+  --stamp-red:    #A63D40;     /* wrong answer, errors                */
+  --stamp-gold:   #C99B3A;     /* highlights, best-score medals       */
+  --compass-rose: #B26E3A;     /* copper/bronze compass accents       */
+
+  /* ==================== SEMANTIC MAPPINGS ==================== */
+  --color-bg:            var(--parchment-50);
+  --color-bg-elevated:   var(--parchment-100);
+  --color-bg-panel:      var(--parchment-200);
+  --color-border:        var(--parchment-300);
+  --color-border-strong: var(--earth-500);
+  --color-rule:          var(--earth-300);
+
+  --color-fg:            var(--earth-900);
+  --color-fg-muted:      var(--earth-700);
+  --color-fg-subtle:     var(--earth-500);
+  --color-fg-inverse:    var(--parchment-50);
+
+  --color-primary:       var(--earth-500);
+  --color-primary-hover: var(--earth-700);
+  --color-secondary:     var(--ocean-500);
+  --color-accent:        var(--stamp-gold);
+
+  --color-correct:       var(--forest-500);
+  --color-wrong:         var(--stamp-red);
+
+  --color-link:          var(--earth-500);
+  --color-link-visited:  var(--earth-700);
+
+  /* ==================== TYPE SYSTEM ==================== */
+  --font-title:   'IM Fell DW Pica', 'Times New Roman', serif;
+  --font-display: 'Fraunces', 'IM Fell DW Pica', 'Times New Roman', serif;
+  --font-display-sc: 'IM Fell DW Pica SC', 'IM Fell DW Pica', serif;
+  --font-body:    'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-ui:      'Work Sans', -apple-system, 'Segoe UI', sans-serif;
+  /* ==================== REGION COLOR MAPPING ==================== */
+  /* Each continent gets a distinct atlas color, tuned so light + dark
+     variants read well on parchment. Use token pairs per region:
+       --region-<id>-fg   : strong border / text / filled bg
+       --region-<id>-bg   : tinted fill for hover / active wash          */
+  --region-world-fg:   var(--earth-700);   /* compass brown / neutral   */
+  --region-world-bg:   var(--earth-100);
+  --region-europe-fg:  var(--forest-500);  /* forest — old continent    */
+  --region-europe-bg:  var(--forest-100);
+  --region-oceania-fg: var(--ocean-500);   /* ocean — islands + sea     */
+  --region-oceania-bg: var(--ocean-100);
+  --region-africa-fg:  var(--compass-rose);/* terracotta / copper       */
+  --region-africa-bg:  var(--earth-100);
+  --region-america-fg: var(--stamp-red);   /* brick-red stamp           */
+  --region-america-bg: #EED6C7;            /* warm rose wash            */
+  --region-asia-fg:    var(--stamp-gold);  /* imperial gold             */
+  --region-asia-bg:    #F1E3B6;            /* aged gold wash            */
+
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
+  /* Numeric / tabular — uses the display face with tabular figures.
+     Prefer this over --font-mono for scores, timers, round counters. */
+  --font-numeric: 'Fraunces', 'IM Fell DW Pica', 'Times New Roman', serif;
+
+  /* Size ramp — generous, print-inspired                            */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   22px;
+  --text-xl:   28px;
+  --text-2xl:  36px;
+  --text-3xl:  48px;
+  --text-4xl:  64px;
+  --text-5xl:  88px;
+
+  --leading-tight: 1.15;
+  --leading-snug:  1.3;
+  --leading-body:  1.55;
+  --leading-loose: 1.75;
+
+  --tracking-tight:  -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.06em;
+  --tracking-wider:  0.14em;     /* for SMALL CAPS / kickers        */
+
+  /* ==================== SPACING (8pt, with 2px micro) ==================== */
+  --space-1:  2px;
+  --space-2:  4px;
+  --space-3:  8px;
+  --space-4:  12px;
+  --space-5:  16px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  48px;
+  --space-9:  64px;
+  --space-10: 96px;
+
+  /* ==================== RADII ==================== */
+  /* Retro-web: modest radii. Flags/cards stay crisp.                 */
+  --radius-none: 0;
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   8px;
+  --radius-pill: 999px;
+
+  /* ==================== BORDERS ==================== */
+  --border-hairline: 1px solid var(--color-border);
+  --border-rule:     1px solid var(--color-rule);
+  --border-strong:   2px solid var(--earth-500);
+  --border-ink:      1px solid var(--earth-700);
+  /* Decorative double rule — common in atlases                       */
+  --border-double:   3px double var(--earth-500);
+
+  /* ==================== SHADOWS / ELEVATION ==================== */
+  /* Soft, paper-like. Never blue-gray Material shadows.              */
+  --shadow-xs: 0 1px 0 rgba(94, 70, 43, 0.12);
+  --shadow-sm: 0 2px 0 rgba(94, 70, 43, 0.18);
+  --shadow-md: 0 3px 0 rgba(94, 70, 43, 0.22), 0 1px 0 rgba(94, 70, 43, 0.12);
+  --shadow-lg: 0 6px 0 rgba(94, 70, 43, 0.22), 0 2px 4px rgba(58, 44, 28, 0.18);
+  /* Inner "letterpress" inset — for pressed buttons                 */
+  --shadow-inset: inset 0 1px 2px rgba(58, 44, 28, 0.25);
+  /* Glow for correct/wrong feedback                                 */
+  --glow-correct: 0 0 0 3px rgba(92, 122, 79, 0.35);
+  --glow-wrong:   0 0 0 3px rgba(166, 61, 64, 0.35);
+
+  /* ==================== MOTION ==================== */
+  --ease-out:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in:    cubic-bezier(0.55, 0.06, 0.68, 0.19);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:   120ms;
+  --dur-base:   200ms;
+  --dur-slow:   400ms;
+}
+
+/* ==================== RESET-ISH BASE ==================== */
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ==================== SEMANTIC TYPE CLASSES ==================== */
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--earth-900);
+  margin: 0 0 var(--space-5);
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-snug);
+  color: var(--earth-900);
+  margin: 0 0 var(--space-4);
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--earth-900);
+  margin: 0 0 var(--space-4);
+}
+
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
+  margin: 0 0 var(--space-3);
+}
+
+/* Kicker / eyebrow — small caps label over a heading */
+.kicker {
+  font-family: var(--font-display-sc);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--earth-500);
+  margin: 0 0 var(--space-3);
+}
+
+p, .p {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  margin: 0 0 var(--space-5);
+  color: var(--color-fg);
+  text-wrap: pretty;
+}
+
+.lead {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--text-md);
+  color: var(--color-fg-muted);
+  line-height: var(--leading-body);
+}
+
+small, .small {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--color-fg-muted);
+}
+
+.label, label {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--earth-700);
+}
+
+code, .code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+.badge {
+  display: inline-block;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-sm);
+  color: var(--earth-700);
+  background: var(--parchment-100);
+}
+
+/* A classic travel-stamp — for scores, medals, achievements */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-display-sc);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--stamp-red);
+  padding: 6px 14px;
+  border: 2px solid var(--stamp-red);
+  border-radius: var(--radius-sm);
+  transform: rotate(-4deg);
+  background: transparent;
+}
+
+/* Decorative hr — atlas-style double rule */
+.rule-double {
+  border: 0;
+  border-top: 1px solid var(--earth-500);
+  border-bottom: 1px solid var(--earth-500);
+  height: 3px;
+  margin: var(--space-7) 0;
+}
+
+/* A parchment paper texture — subtle, usable as page bg */
+.paper {
+  background-color: var(--parchment-50);
+  background-image:
+    radial-gradient(ellipse at 15% 10%, rgba(140, 106, 67, 0.06), transparent 55%),
+    radial-gradient(ellipse at 85% 90%, rgba(140, 106, 67, 0.08), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(140, 106, 67, 0.02) 0 1px, transparent 1px 3px);
+}
+
+/* Links */
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+a:hover { color: var(--color-primary-hover); }
+a:visited { color: var(--color-link-visited); }
+
+/* Utility classes */
+.text-center { text-align: center; }
+.text-muted  { color: var(--color-fg-muted); }
+.text-subtle { color: var(--color-fg-subtle); }
+
+/* ==================== BUTTONS ==================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+  user-select: none;
+  text-decoration: none;
+}
+.btn:active { transform: translateY(1px); box-shadow: var(--shadow-inset); }
+
+.btn-primary {
+  background: var(--earth-500);
+  color: var(--parchment-50);
+  border-color: var(--earth-700);
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover { background: var(--earth-700); }
+
+.btn-secondary {
+  background: var(--ocean-500);
+  color: var(--parchment-50);
+  border-color: var(--ocean-700);
+  box-shadow: var(--shadow-sm);
+}
+.btn-secondary:hover { background: var(--ocean-700); }
+
+.btn-reversed {
+  background: var(--parchment-50);
+  color: var(--earth-500);
+  border: 2px solid var(--earth-500);
+}
+.btn-reversed:hover {
+  background: var(--earth-500);
+  color: var(--parchment-50);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--earth-700);
+  border: 1px dashed var(--earth-500);
+}
+.btn-ghost:hover {
+  background: var(--parchment-200);
+  color: var(--earth-900);
+}
