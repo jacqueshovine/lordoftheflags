@@ -6,6 +6,8 @@ All the cool stuff I've added to this game!
 
 ### Features
 - Complete flag list with most world country flags
+- Complete visual redesign with improved styling
+- Updated color scheme and layout
 
 ### Technical
 
