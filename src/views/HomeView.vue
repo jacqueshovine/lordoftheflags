@@ -18,29 +18,28 @@ function setCurrentMode(mode) {
 <template>
   <main class="max-w-xl mx-auto p-4">
     <h1 class="game-title">Lord of the Flags</h1>
-    <div class="h-20 flex flex-col items-center justify-center">
-      <p class="text-xl text-center">{{ gameStore.currentMode.name }}</p>
-      <p class="text-center">{{ gameStore.currentMode.description }}</p>
-    </div>
 
     <!-- Loader (when loading flags) -->
     <Loader v-if="gameStore.loading" />
 
     <!-- Mode Selection -->
-    <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mt-8">
-      <button 
+    <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mode-picker">
+      <button
         v-for="mode in gameStore.modes"
         :key="mode.id"
-        class="btn-reversed mb-4 mx-2"
+        class="mode"
+        :class="{ active: gameStore.currentMode.id === mode.id }"
         @click="setCurrentMode(mode)"
       >
-        {{ mode.icon }}
+        <div class="glyph">{{ mode.icon }}</div>
+        <div class="mode-name">{{ mode.name }}</div>
+        <div class="mode-desc">{{ mode.description }}</div>
       </button>
     </div>
 
     <!-- Region Selection (when game is not running) -->
     <div v-if="!gameStore.gameRunning && !gameStore.loading" class="mt-8">
-      <p class="kicker mb-4">Select a Region</p>
+      <p class="kicker region-label mb-4">Select a Region</p>
       <div class="flex flex-col gap-2">
         <RegionButton
           v-for="region in gameStore.getRegions"
@@ -66,12 +65,11 @@ function setCurrentMode(mode) {
 
       <FlagGrid v-if="gameStore.flagPossibilities.length" />
 
-      <button 
-        class="btn-primary block mx-auto"
-        @click="gameStore.resetGame()"
-      >
-        Quit Game
-      </button>
+      <div class="controls-row">
+        <button class="btn btn-secondary" @click="gameStore.resetGame()">
+          Quit Game
+        </button>
+      </div>
     </div>
 
     <ResultsDisplay v-if="gameStore.gameEnding" />
@@ -88,6 +86,60 @@ function setCurrentMode(mode) {
   letter-spacing: var(--tracking-tight);
   color: var(--earth-900);
   text-align: center;
-  margin: 0 0 var(--space-4);
+  margin: 0 0 var(--space-6);
+}
+
+.mode-picker {
+  display: flex;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.mode {
+  flex: 1;
+  background: var(--parchment-50);
+  border: 1.5px solid var(--earth-900);
+  color: var(--earth-900);
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+.mode:hover,
+.mode.active {
+  background: var(--earth-900);
+  color: var(--parchment-50);
+}
+
+.glyph {
+  font-size: 20px;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+
+.mode-name {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+
+.mode-desc {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: var(--text-xs);
+  opacity: 0.8;
+}
+
+.region-label {
+  font-size: var(--text-lg);
+}
+
+.controls-row {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-6);
 }
 </style>

@@ -4,55 +4,62 @@ import { useGameStore } from '@/stores/game';
 import { getFlagUrl } from '@/utils/helpers';
 
 const props = defineProps({
-  flag: {
-    type: Object,
-    required: true
-  }
+  flag: { type: Object, required: true }
 });
 
 const gameStore = useGameStore();
 
-const isDisabled = computed(() => gameStore.selectedAnswer !== null);
+const isAnswered = computed(() => gameStore.selectedAnswer !== null);
 
-const borderClass = computed(() => {
-  if (!gameStore.selectedAnswer) {
-    return 'border-transparent';
-  }
-  
-  const isCorrect = props.flag.code === gameStore.flagToGuess?.code;
-  const isSelected = gameStore.selectedAnswer === props.flag.code;
-  
-  // Show colored border on the correct answer
-  if (isCorrect) {
-    return 'border-correct';
-  }
-  
-  // Show colored border only on the selected wrong answer
-  if (isSelected && !isCorrect) {
-    return 'border-wrong';
-  }
-  
-  return 'border-transparent';
+const tileState = computed(() => {
+  if (!gameStore.selectedAnswer) return null;
+  if (props.flag.code === gameStore.flagToGuess?.code) return 'correct';
+  if (gameStore.selectedAnswer === props.flag.code) return 'wrong';
+  return null;
 });
 
 function handleClick() {
-  if (!isDisabled.value) {
-    gameStore.checkAnswer(props.flag);
-  }
+  if (!isAnswered.value) gameStore.checkAnswer(props.flag);
 }
 </script>
 
 <template>
-  <div 
-    class="cursor-pointer"
-    :class="{ 'pointer-events-none': isDisabled }"
+  <div
+    class="tile"
+    :class="[tileState, { dimmed: isAnswered && !tileState }]"
     @click="handleClick"
   >
-    <img 
-      :src="getFlagUrl(flag.code)"
-      :alt="flag.name"
-      class="w-40 h-auto border-4 transition-colors duration-200"
-      :class="borderClass"
-    />
+    <img :src="getFlagUrl(flag.code)" :alt="flag.name" />
   </div>
 </template>
+
+<style scoped>
+.tile {
+  border-radius: var(--radius-sm);
+  aspect-ratio: 3 / 2;
+  cursor: pointer;
+  transition:
+    box-shadow var(--dur-base) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out);
+}
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 1px;
+}
+
+.tile.correct {
+  box-shadow: 0 0 0 4px var(--forest-500), var(--glow-correct);
+}
+
+.tile.wrong {
+  box-shadow: 0 0 0 4px var(--stamp-red), var(--glow-wrong);
+}
+
+.tile.dimmed {
+  opacity: 0.4;
+}
+</style>

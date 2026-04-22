@@ -6,9 +6,21 @@ const gameStore = useGameStore();
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-4">
-    <div v-for="flag in gameStore.flagPossibilities" :key="`${gameStore.getCurrentRound}-${flag.code}`" class="flex justify-center">
-      <FlagTile :flag="flag" />
-    </div>
+  <div class="flag-grid">
+    <FlagTile
+      v-for="flag in gameStore.flagPossibilities"
+      :key="`${gameStore.getCurrentRound}-${flag.code}`"
+      :flag="flag"
+    />
   </div>
 </template>
+
+<style scoped>
+.flag-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 360px;
+  margin: 0 auto;
+}
+</style>
