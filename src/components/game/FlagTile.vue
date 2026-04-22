@@ -35,27 +35,29 @@ function handleClick() {
 
 <style scoped>
 .tile {
-  border-radius: var(--radius-sm);
   aspect-ratio: 3 / 2;
   cursor: pointer;
-  transition:
-    box-shadow var(--dur-base) var(--ease-out),
-    opacity var(--dur-base) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--dur-base) var(--ease-out);
 }
 
 .tile img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   display: block;
   border-radius: 1px;
+  transition: box-shadow var(--dur-base) var(--ease-out);
 }
 
-.tile.correct {
+.tile.correct img {
   box-shadow: 0 0 0 4px var(--forest-500), var(--glow-correct);
 }
 
-.tile.wrong {
+.tile.wrong img {
   box-shadow: 0 0 0 4px var(--stamp-red), var(--glow-wrong);
 }
 
