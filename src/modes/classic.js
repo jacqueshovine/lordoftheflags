@@ -1,7 +1,7 @@
 export default {
   id: 'classic',
   name: 'Classic',
-  icon: '🎯',
+  icon: 'CompassRose',
   description: 'Guess all flags from a region. No time limit.',
 
   // ========================================================================================================================

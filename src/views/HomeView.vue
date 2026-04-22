@@ -8,6 +8,10 @@ import Footer from '@/components/layout/Footer.vue';
 import Timer from '@/components/ui/Timer.vue';
 import Loader from '@/components/ui/Loader.vue';
 
+import { PhCompassRose, PhTimer } from "@phosphor-icons/vue";
+
+const modeIcons = { PhCompassRose, PhTimer };
+
 const gameStore = useGameStore();
 
 function setCurrentMode(mode) {
@@ -31,7 +35,7 @@ function setCurrentMode(mode) {
         :class="{ active: gameStore.currentMode.id === mode.id }"
         @click="setCurrentMode(mode)"
       >
-        <div class="glyph">{{ mode.icon }}</div>
+        <component :is="modeIcons[`Ph${mode.icon}`]" :size="32" class="glyph"/>
         <div class="mode-name">{{ mode.name }}</div>
         <div class="mode-desc">{{ mode.description }}</div>
       </button>
@@ -97,6 +101,9 @@ function setCurrentMode(mode) {
 
 .mode {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background: var(--parchment-50);
   border: 1.5px solid var(--earth-900);
   color: var(--earth-900);
@@ -118,9 +125,7 @@ function setCurrentMode(mode) {
 }
 
 .glyph {
-  font-size: 20px;
-  line-height: 1;
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
 }
 
 .mode-name {

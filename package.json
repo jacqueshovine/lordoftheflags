@@ -16,6 +16,7 @@
     "@fontsource/im-fell-dw-pica": "^5.2.6",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/work-sans": "^5.2.8",
+    "@phosphor-icons/vue": "^2.2.1",
     "pinia": "^3.0.4",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4"

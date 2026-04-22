@@ -1,7 +1,7 @@
 export default {
   id: 'timer',
   name: 'Timer',
-  icon: '⏱️',
+  icon: 'Timer',
   get description() {
     return `Guess as many flags as possible within ${this.timerDuration} seconds!`;
   },
