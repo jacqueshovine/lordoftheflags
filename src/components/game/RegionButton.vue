@@ -57,6 +57,10 @@ function handleClick() {
   background: var(--earth-900);
   color: var(--parchment-50);
 }
+.region:focus-visible {
+  outline: 2px solid var(--earth-700);
+  outline-offset: 2px;
+}
 .name {
   letter-spacing: 0.12em;
 }

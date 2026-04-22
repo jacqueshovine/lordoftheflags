@@ -355,12 +355,12 @@ a:visited { color: var(--color-link-visited); }
 .btn-primary:hover { background: var(--earth-700); }
 
 .btn-secondary {
-  background: var(--ocean-500);
+  background: var(--forest-500);
   color: var(--parchment-50);
-  border-color: var(--ocean-700);
+  border-color: var(--forest-700);
   box-shadow: var(--shadow-sm);
 }
-.btn-secondary:hover { background: var(--ocean-700); }
+.btn-secondary:hover { background: var(--forest-700); }
 
 .btn-reversed {
   background: var(--parchment-50);

@@ -66,7 +66,7 @@ function setCurrentMode(mode) {
       <FlagGrid v-if="gameStore.flagPossibilities.length" />
 
       <div class="controls-row">
-        <button class="btn btn-secondary" @click="gameStore.resetGame()">
+        <button class="btn btn-primary" @click="gameStore.resetGame()">
           Quit Game
         </button>
       </div>
@@ -111,6 +111,10 @@ function setCurrentMode(mode) {
 .mode.active {
   background: var(--earth-900);
   color: var(--parchment-50);
+}
+.mode:focus-visible {
+  outline: 2px solid var(--earth-700);
+  outline-offset: 2px;
 }
 
 .glyph {
