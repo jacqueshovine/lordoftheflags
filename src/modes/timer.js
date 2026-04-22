@@ -12,7 +12,7 @@ export default {
   hasRegions: true,
   regions: ['World', 'Africa', 'America', 'Asia', 'Europe', 'Oceania'],
   hasTimer: true,
-  timerDuration: 60, // in seconds
+  timerDuration: 30, // in seconds
   feedbackDelay: 500, // faster feedback for timer mode
   wrongAnswersCount: 3,
 
